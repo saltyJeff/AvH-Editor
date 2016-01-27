@@ -1,0 +1,85 @@
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+    overflow: hidden;
+}
+#overlay {
+    width: 600px;
+    background-color: lightgrey;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+#invisOverlay {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    z-index: 100;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 255, 0.2);
+}
+.classInput {
+    width: 200px;
+}
+
+#header {
+    width: 100%;
+    height: 5%;
+    background-color: wheat;
+    z-index: 0;
+}
+#header > h1 {
+    margin: 0px;
+    font-size: 4vh;
+}
+
+#tabs {
+    width: 100%;
+    height: 4%;
+    background-color: lightseagreen;    
+}
+div.tab {
+    display: inline-block;
+    width: 24%;
+    margin-left: 0.5%;
+    text-align: center;
+    font-size: 3.5vh;
+    height: 100%;
+    cursor: pointer;
+}
+div.openTab {
+    background-color: lightseagreen;
+}
+div.openTab:hover {
+    background-color: mediumpurple;
+}
+div.selectTab {
+    background-color: mediumvioletred;
+}
+
+#main {
+    height: 91%;
+    width: 100%;
+    overflow: scroll;
+    background-color: ghostwhite;
+}
+.subpage {
+    height: 100%;
+    width: 100%;
+    text-align: center;
+}
+.subpage > h2 {
+    font-size: 6vh;
+}
+#defs {
+    list-style: none;
+}
+#xmlTxt {
+    width: 95%;
+    height: 95%;
+}
+#saveXml {
+   height: 2.5%;
+}

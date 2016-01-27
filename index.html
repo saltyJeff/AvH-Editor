@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="js/start.js"></script>
+        <script src="js/data.js"></script>
+        <script src="js/ui.js"></script>
+        <script src="js/vkbeautify.js"></script>
+        <link rel="stylesheet" href="css/main.css">
+    </head>
+    <body>
+        <div id="invisOverlay">
+            <div id="overlay">
+                <div>
+                    <h2>Please load a file...</h2>
+                    <input type="file" class="startInput" id="startFile" onchange="setColor(this)" onclick="this.value = null;"/>
+                </div>
+                <div>
+                    <h2>or create a new one.</h2>
+                    <input type="text" class="startInput" placeholder="New Map Name" id="newName" oninput="setColor(this)"/>
+                </div>
+                <input type="button" value="continue" onclick="cont()" style="margin-bottom: 10px;" />
+            </div>
+        </div>
+        
+        <div id="header">
+            <h1>Aliens Vs. Humans Level Editor</h1>
+        </div>
+        <div id="tabs">
+            <div class="tab selectTab" onclick="tab(this)">Level</div>
+            <div class="tab openTab" onclick="tab(this)">Defines</div>
+            <div class="tab openTab" onclick="tab(this)">Waves</div>
+            <div class="tab openTab" onclick="tab(this)">XML</div>
+        </div>
+        <div id="main">
+            <div class="subpage" id="Level">
+                
+                
+            </div>
+            <div class="subpage" id="Defines" hidden>
+                <h2>Defines:</h2>
+                <ul id="defs">
+                    
+                </ul>
+            </div>
+            <div class="subpage" id="Waves" hidden>
+                
+                
+            </div>
+            <div class="subpage" id="XML" hidden>
+                <textarea id="xmlTxt"></textarea><br>
+                <input type="button" value="saveChanges" id="saveXml"/>
+            </div>
+        </div>
+    </body>
+</html>
