@@ -1,5 +1,8 @@
 <level>
-    <defines>
+    <meta>
         <name>Sample Map for Aliens Vs Humans</name>
+    </meta>
+    <defines>
+        
     </defines>
 </level>

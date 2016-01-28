@@ -1,3 +1,6 @@
+/*
+ * Start.js handles all the grey box functions and initializing of new projects
+*/
 var lastSelect = null;
 var operation = "";
 function setColor (obj) {
@@ -26,17 +29,24 @@ function create(name) {
     }
     data = new DOMParser().parseFromString("<level></level>", "text/xml");
     root = data.documentElement;
-    var defines = newNode("defines");
-    defines.appendChild(newNode("name", name));
-    root.appendChild(defines);
+    var meta = newNode("meta");
+    meta.appendChild(newNode("name", name));
+    meta.appendChild(newNode("size", "50x50"));
+    root.appendChild(meta);
+    root.appendChild(newNode("defines"));
+    var level = newNode("level");
+    level.appendChild(newNode("floor", "50x50"));
+    root.appendChild(level);
+    level.appendChild(newNode("waves"));
     document.getElementsByTagName("h1")[0].textContent = data.getElementsByTagName("name")[0].textContent;
+    xml2map();
 }
 
 function load(file) {
     var reader = new FileReader();
     
     reader.onload = function() {
-        data.xml = new DOMParser().parseFromString(this.result, "text/xml");
+        data = new DOMParser().parseFromString(this.result, "text/xml");
         root = data.documentElement;
         document.getElementsByTagName("h1")[0].textContent = data.getElementsByTagName("name")[0].textContent;
     }

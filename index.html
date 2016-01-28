@@ -4,8 +4,11 @@
         <script src="js/start.js"></script>
         <script src="js/data.js"></script>
         <script src="js/ui.js"></script>
+        <script src="js/map.js"></script>
         <script src="js/vkbeautify.js"></script>
         <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="css/level.css">
+        <link href='https://fonts.googleapis.com/css?family=Orbitron:400,900' rel='stylesheet' type='text/css'>
     </head>
     <body>
         <div id="invisOverlay">
@@ -30,25 +33,51 @@
             <div class="tab openTab" onclick="tab(this)">Defines</div>
             <div class="tab openTab" onclick="tab(this)">Waves</div>
             <div class="tab openTab" onclick="tab(this)">XML</div>
+            <input type="button" value="Save/Download Map" onclick="save()" />
         </div>
+        <!--
+            Main Part of the Website, 4 Pages
+        --> 
         <div id="main">
             <div class="subpage" id="Level">
-                
-                
+                <div id="objects">
+                    <h3>Toolbox</h3>
+                    <ul id="tools">
+                        
+                    </ul>
+                </div>
+                <div id="map">
+                    <div id="floor" class="tiling"></div>
+                </div>
             </div>
             <div class="subpage" id="Defines" hidden>
-                <h2>Defines:</h2>
-                <ul id="defs">
-                    
+                <h2>Metadata:</h2>
+                <ul id="metas">
+                    <template id="meta">
+                        <li>
+                            <span style="width: 40%" class="variable" id="variable">VARIABLE:</span>
+                            <input type="text" placeholder="VALUE" style="width: 40%" class="val" id="val" onchange="defsSaved = false;"/>
+                        </li>
+                    </template>
                 </ul>
+                <h2>Defines: <input type="button" value="Add Define" onclick="newDefine()" /></h2>
+                <ul id="defs">
+                    <template id="def">
+                        <li>
+                            <input type="text" style="width: 40%" class="variable" id="variable" placeholder="VARIABLE" onchange="defsSaved = false;"/>
+                            <input type="text" placeholder="VALUE" style="width: 40%" class="val" id="val" onchange="defsSaved = false;"/>
+                            <input type="button" value="X" style="width: 2%" id="removeButton" onclick="defsSaved = false; removeDefine(this);"/>
+                        </li>
+                    </template>
+                </ul>
+                <input type="button" value="Save Changes" onclick="saveDefines()"/>
             </div>
             <div class="subpage" id="Waves" hidden>
-                
                 
             </div>
             <div class="subpage" id="XML" hidden>
                 <textarea id="xmlTxt"></textarea><br>
-                <input type="button" value="saveChanges" id="saveXml"/>
+                <input type="button" value="Save Changes" id="saveXml" onclick="saveXml()"/>
             </div>
         </div>
     </body>
