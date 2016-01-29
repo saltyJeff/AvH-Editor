@@ -35,9 +35,8 @@ function create(name) {
     root.appendChild(meta);
     root.appendChild(newNode("defines"));
     var level = newNode("level");
-    level.appendChild(newNode("floor", "50x50"));
     root.appendChild(level);
-    level.appendChild(newNode("waves"));
+    root.appendChild(newNode("waves"));
     document.getElementsByTagName("h1")[0].textContent = data.getElementsByTagName("name")[0].textContent;
     xml2map();
 }

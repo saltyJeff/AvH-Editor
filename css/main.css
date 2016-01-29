@@ -4,6 +4,8 @@ html, body {
     margin: 0px;
     overflow: hidden;
     font-family: "Orbitron", serif;
+    min-width: 1024px;
+    min-height: 768px;
 }
 #overlay {
     width: 600px;
@@ -45,10 +47,12 @@ html, body {
 }
 #tabs > input {
     display: inline-block;
-    width: 11%;
-    height: 70%;
-    margin-top: auto;
-    margin-bottom: auto;
+    width: 12%;
+    margin-left: 0.5%;
+    text-align: center;
+    font-size: 3vh;
+    height: 100%;
+    cursor: pointer;
 }
 div.tab {
     display: inline-block;
@@ -84,14 +88,17 @@ div.selectTab {
 .subpage > h2 {
     font-size: 6vh;
 }
-#defs {
+#Waves, #Defines {
+    overflow-y: scroll;
+}
+
+
+#defs, #metas {
     list-style: none;
     display: block;
 }
-#metas {
-    list-style: none;
-    display: block;
-}
+
+
 #xmlTxt {
     width: 95%;
     height: 95%;
@@ -101,4 +108,22 @@ div.selectTab {
 }
 li > span {
     font-size: 4vh;
+}
+
+ol {
+    margin-left: auto;
+    margin-right: auto;
+    width: 20%;
+    min-width: 600px;
+}
+ol > li {
+    width: 100%;
+    min-width: 100px;
+    border: 1px solid white;
+}
+#waves {
+    background-color: beige;
+}
+.stages {
+    background-color: lightblue;
 }

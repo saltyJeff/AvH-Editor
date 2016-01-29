@@ -33,7 +33,7 @@
             <div class="tab openTab" onclick="tab(this)">Defines</div>
             <div class="tab openTab" onclick="tab(this)">Waves</div>
             <div class="tab openTab" onclick="tab(this)">XML</div>
-            <input type="button" value="Save/Download Map" onclick="save()" />
+            <input type="button" value="Save Map" onclick="save()" />
         </div>
         <!--
             Main Part of the Website, 4 Pages
@@ -73,7 +73,52 @@
                 <input type="button" value="Save Changes" onclick="saveDefines()"/>
             </div>
             <div class="subpage" id="Waves" hidden>
+                <h2>Waves: <input type="button" value="Add Wave" onclick="addWave()" /></h2>
+                <ol id="waves">
+                    <template id="wave">
+                        <li>
+                            <input type="button" value="Show Stages" onclick="toggleWave(this)" />
+                            <input type="number" placeholder="MONEY" class="reward" min="0" step="1"/>
+                            <input type="button" value="X" onclick="removeWave(this)"<br>
+                            <h3 hidden>Stages: 
+                                <input type="button" value="Add Stage" onclick="addStage(this)"/>
+                                <input type="button" value="Add Wait" onclick="addWait(this)"/>
+                            </h3>
+                            <ol class="stages" hidden>
+                                <template id="stage">
+                                    <li class="spawn">
+                                        <h4>Enemy Type: 
+                                            <select class="type">
+                                                <option value="grunt">Grunt</option>
+                                                <option value="heavy">Heavy</option>
+                                                <option value="sprinter">Sprinter</option>
+                                                <option value="adam">Adam</option>
+                                                <option value="adambomber">Adam Bomber</option>
+                                            </select>
+                                        </h4>
+                                        <h4>Amount: 
+                                            <input type="number" step="0.1" min="1" class="amt" />
+                                        </h4>
+                                        <h4>Spawn Speed: 
+                                            <input type="number" step="0.1" min="1" class="speed" />
+                                        </h4>
+                                        <input type="button" value="Remove Stage" onclick="removeWave(this)" />
+                                    </li>
+                                </template>
+                                <template id="wait">
+                                    <li class="wait">
+                                        <h3>Wait Time: 
+                                            <input type="number" step="0.1" min="1" class="waitTime"/>
+                                        </h3>
+                                        <input type="button" value="Remove Stage" onclick="removeStage(this)" />
+                                    </li>
+                                </template>
+                            </ol>
+                        </li>
+                    </template>
+                </ol>
                 
+                <input type="button" value="Save Changes" onclick="saveWaves()" />
             </div>
             <div class="subpage" id="XML" hidden>
                 <textarea id="xmlTxt"></textarea><br>

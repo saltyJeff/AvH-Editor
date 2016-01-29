@@ -1,8 +1,1 @@
-<level>
-    <meta>
-        <name>Sample Map for Aliens Vs Humans</name>
-    </meta>
-    <defines>
-        
-    </defines>
-</level>
+<level><meta><name>Sample Map</name><size>50x50</size></meta><defines/><level/><waves><wave cash="300"><grunt amount="8" speed="0.2"/></wave><wave cash="500"><grunt amount="10" speed="0.2"/><grunt amount="8" speed="0.6"/></wave><wave cash="400"><grunt amount="7" speed="0.1"/><wait time="3"/><heavy amount="3" speed="0.2"/></wave></waves></level>
