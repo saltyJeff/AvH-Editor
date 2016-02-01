@@ -34,6 +34,8 @@ function tab(obj) {
         case "Defines":
             define();
             break;
+        case "Waves":
+            
         case "Level":
             xml2map();
             break;
