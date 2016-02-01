@@ -82,7 +82,7 @@ function saveWaves() {
         }
         waves.appendChild(newWave);
     }
-    console.log("Waves Modified");
+    console.log("Waves Saved");
 }
 //save all of it
 function save() {

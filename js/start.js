@@ -31,13 +31,12 @@ function create(name) {
     root = data.documentElement;
     var meta = newNode("meta");
     meta.appendChild(newNode("name", name));
-    meta.appendChild(newNode("size", "50x50"));
+    meta.appendChild(newNode("size", "30x30"));
     root.appendChild(meta);
     root.appendChild(newNode("defines"));
-    var level = newNode("level");
-    root.appendChild(level);
+    var map = newNode("map");
+    root.appendChild(map);
     root.appendChild(newNode("waves"));
-    document.getElementsByTagName("h1")[0].textContent = data.getElementsByTagName("name")[0].textContent;
     xml2map();
 }
 
@@ -47,7 +46,7 @@ function load(file) {
     reader.onload = function() {
         data = new DOMParser().parseFromString(this.result, "text/xml");
         root = data.documentElement;
-        document.getElementsByTagName("h1")[0].textContent = data.getElementsByTagName("name")[0].textContent;
+        xml2map();
     }
     reader.readAsText(file);
 }

@@ -1,5 +1,14 @@
 .tiling {
     background-repeat: repeat;
+    height: 64px;
+    width: 64px;
+    position: absolute;
+    z-index: 10;
+    background-position: center;
+}
+.single {
+    position: absolute;
+    z-index: 10;
 }
 #map {
     position: absolute;
@@ -14,6 +23,7 @@
     position: absolute;
     left: 0px;
     top: 0px;
+    z-index: 0;
 }
 #objects {
     position: absolute;
@@ -22,7 +32,12 @@
     width: 300px;
     overflow-y: scroll;
     overflow-x: hidden;
-    background-color: teal;
+    background-color: rgba(255,100,255,0.5);
     height: 100%;
     z-index: 1;
+}
+#player {
+    position: absolute;
+    top: 0px;
+    left: 600px;
 }
