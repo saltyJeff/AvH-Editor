@@ -3,6 +3,7 @@
     <head>
         <title>AvH Editor</title>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/interact.js/1.2.6/interact.min.js"></script>
+        <script src="js/transmute.js"></script>
         <script src="js/start.js"></script>
         <script src="js/data.js"></script>
         <script src="js/ui.js"></script>
@@ -48,26 +49,31 @@
                     <!--Buggy
                     <h4>Scale 25%<input type="range" min="25" max="100" onchange="rescale(this)" value="100"/>100%</h4>
                     -->
+                    <div id="transforms" hidden>
+                        <h4>Width<input type="number" id="width" value="1" onchange="reTransform()"/></h4>
+                        <h4>Height<input type="number" id="height" value="1"  onchange="reTransform()" /></h4>
+                        <h4>Rotation<input type="range" id="rotation" defaultValue="0"  onchange="reTransform()" min="0" max="360" step="15"/></h4>
+                    </div>
                     <ul id="tools">
-                        <img src="https://drive.google.com/uc?export=download&id=0BxGRqMtndc1CYWUtSnBjS21JV1E" draggable="true" ondragstart="dragStart(event)" data-tool="tool-wall"/>
-                        <img src="https://drive.google.com/uc?export=download&id=0BxGRqMtndc1CbklXeXZKS0NmNnc" draggable="true" ondragstart="dragStart(event)" data-tool="tool-enemypass"/>
-                        <img src="https://drive.google.com/uc?export=download&id=0BxGRqMtndc1Cbm1jM0ExWFlyQWM" draggable="true" ondragstart="dragStart(event)" data-tool="tool-spawn" style="width: 64px; height: 64px;" />
-                        <img src="https://drive.google.com/uc?export=download&id=0BxGRqMtndc1CdFdMSnNmX09KVDg" draggable="true" ondragstart="dragStart(event)" data-tool="tool-player" />
-                        <img src="https://drive.google.com/uc?export=download&id=0BxGRqMtndc1CbFA3bWo2amFUaFU" draggable="true" ondragstart="dragStart(event)" data-tool="tool-store" />
+                        <img src="img/castle_wall.png" draggable="true" ondragstart="dragStart(event)" data-tool="tool-wall"/>
+                        <img src="img/wall.png" draggable="true" ondragstart="dragStart(event)" data-tool="tool-enemypass" style="width: 64px; height: 64px;"/>
+                        <img src="img/spawnpt.png" draggable="true" ondragstart="dragStart(event)" data-tool="tool-spawn" style="width: 64px; height: 64px;" />
+                        <img src="img/player.png" draggable="true" ondragstart="dragStart(event)" data-tool="tool-player" />
+                        <img src="img/NewstoreActive.png" draggable="true" ondragstart="dragStart(event)" data-tool="tool-store" />
                     </ul>
                     <ul id="customTools">
                         
                     </ul>
                     <div id="toolList">
-                        <div class="tiling resizable tool-wall" style="background-image: url('https://drive.google.com/uc?export=download&id=0BxGRqMtndc1CYWUtSnBjS21JV1E');" hidden data-obj="wall"></div>
-                        <div class="tiling resizable tool-enemypass" style="background-image: url('https://drive.google.com/uc?export=download&id=0BxGRqMtndc1CbklXeXZKS0NmNnc');" hidden data-obj="enemypass"></div>
-                        <img class="draggable single tool-spawn" src="https://drive.google.com/uc?export=download&id=0BxGRqMtndc1Cbm1jM0ExWFlyQWM" hidden data-obj="spawn" style="width: 64px; height: 64px;"/>
-                        <img src="https://drive.google.com/uc?export=download&id=0BxGRqMtndc1CdFdMSnNmX09KVDg" id="player" class="draggable single tool-player" data-obj="player" hidden/>
-                        <img class="draggable single tool-store" src="https://drive.google.com/uc?export=download&id=0BxGRqMtndc1CbFA3bWo2amFUaFU" hidden data-obj="store" />
+                        <div class="tiling resizable tool-wall" style="background-image: url('img/castle_wall.png');" hidden data-obj="wall" onclick="mouse(event, this)" oncontextmenu="setSelected(event, this)"></div>
+                        <div class="tiling resizable tool-enemypass" style="background-image: url('img/wall.png');" hidden data-obj="enemypass" onclick="mouse(event, this)" oncontextmenu="setSelected(event, this)"></div>
+                        <img class="draggable single tool-spawn" src="img/spawnpt.png" hidden data-obj="spawn" style="width: 64px; height: 64px;" onclick="mouse(event, this)" oncontextmenu="setSelected(event, this)"/>
+                        <img src="img/player.png" id="player" class="draggable single tool-player" data-obj="player" hidden onclick="mouse(event, this)" oncontextmenu="setSelected(event, this)"/>
+                        <img class="draggable single tool-store" src="img/NewstoreActive.png" hidden data-obj="store" onclick="mouse(event, this)" oncontextmenu="setSelected(event, this)"/>
                     </div>
                 </div>
                 <div id="map" ondragover="drag(event)" ondrop="drop(event)">
-                    <div id="floor" class="tiling">
+                    <div id="floor" class="tiling"  oncontextmenu="hideTransforms(event);">
                         
                     </div>
                 </div>
@@ -120,7 +126,7 @@
                                             </select>
                                         </h4>
                                         <h4>Amount: 
-                                            <input type="number" step="0.1" min="1" class="amt" />
+                                            <input type="number" step="1" min="1" class="amt" />
                                         </h4>
                                         <h4>Spawn Speed: 
                                             <input type="number" step="0.1" min="1" class="speed" />
