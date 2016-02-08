@@ -43,28 +43,16 @@ function xml2map () {
             continue;
         }
         var element = toolList.getElementsByClassName("tool-"+obj.tagName)[0].cloneNode(false);
-        
-        var sizeX;
-        var sizeY;
-        if(element.tagName.toLowerCase() == "img") {
-            sizeX = element.naturalHeight;
-            sizeY = element.naturalWidth;
-        }
-        else {
-            sizeX = imgSizes[obj.tagName];
-            sizeY = sizeX;
-        }
-        
-        element.style.left = parseFloat(obj.getAttribute("x"))*sizeX+"px";
-        element.style.top = parseFloat(obj.getAttribute("y"))*sizeY+"px";
+        element.style.left = parseFloat(obj.getAttribute("x"))*100+"px";
+        element.style.top = parseFloat(obj.getAttribute("y"))*100+"px";
         var xscale = parseInt(obj.getAttribute("xscale"));
         var yscale = parseInt(obj.getAttribute("yscale"));
         if(!Number.isNaN(xscale)) {
             var size = imgSizes[obj.tagName];
             element.style.width = xscale*size+"px";
             element.style.height = yscale*size+"px";
-            element.style.left = (parseFloat(obj.getAttribute("x"))*sizeX-(xscale*size)/2)+"px";
-            element.style.top = (parseFloat(obj.getAttribute("y"))*sizeY-(yscale*size)/2)+"px";
+            element.style.left = (parseFloat(obj.getAttribute("x"))*100-(xscale*size)/2)+"px";
+            element.style.top = (parseFloat(obj.getAttribute("y"))*100-(yscale*size)/2)+"px";
         }
         element.hidden = false;
         floor.appendChild(element);
@@ -84,25 +72,14 @@ function map2xml () {
         if(obj.classList.contains("resizable")) {
             var leftSet = parseInt(obj.getAttribute("data-x")) || 0;
             var topSet = parseInt(obj.getAttribute("data-y")) || 0;
-            
+            var size = imgSizes[obj.getAttribute("data-obj")];
+                        
             var finalX = Math.round((parseInt(obj.style.left)+leftSet)+(parseInt(obj.style.width)/2 || 0));
             var finalY = Math.round((parseInt(obj.style.top)+topSet)+(parseInt(obj.style.height)/2 || 0));
-            
-            var sizeX;
-            var sizeY;
-                if(obj.tagName.toLowerCase() == "img") {
-                sizeX = element.naturalHeight;
-                sizeY = element.naturalWidth;
-            }
-            else {
-                sizeX = imgSizes[obj.getAttribute("data-obj")];
-                sizeY = sizeX;
-            }
-            
-            node.setAttribute("x", finalX/sizeX);
-            node.setAttribute("y", finalY/sizeY);
-            node.setAttribute("xscale", Math.round((parseFloat(obj.style.width) || sizeX)/sizeX));
-            node.setAttribute("yscale", Math.round((parseFloat(obj.style.height) || sizeY)/sizeY));
+            node.setAttribute("x", finalX/100);
+            node.setAttribute("y", finalY/100);
+            node.setAttribute("xscale", Math.round((parseFloat(obj.style.width) || size)/size));
+            node.setAttribute("yscale", Math.round((parseFloat(obj.style.height) || size)/size));
             node.setAttribute("rotation", obj.transmute.getRotation());
         }
         else {
@@ -115,20 +92,8 @@ function map2xml () {
             }
             var finalX = Math.round(parseInt(obj.style.left)+leftSet);
             var finalY = Math.round(parseInt(obj.style.top)+topSet);
-            
-            var sizeX;
-            var sizeY;
-            if(obj.tagName.toLowerCase() == "img") {
-                sizeX = obj.naturalHeight;
-                sizeY = obj.naturalWidth;
-            }
-            else {
-                sizeX = imgSizes[obj.getAttribute("data-obj")];
-                sizeY = sizeX;
-            }
-            console.log(sizeX);
-            node.setAttribute("x", finalX/sizeX);
-            node.setAttribute("y", finalY/sizeY);
+            node.setAttribute("x", finalX/100);
+            node.setAttribute("y", finalY/100);
             node.setAttribute("rotation", obj.transmute.getRotation());
         }
         
