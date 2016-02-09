@@ -1,5 +1,14 @@
 .tiling {
     background-repeat: repeat;
+    height: 64px;
+    width: 64px;
+    position: absolute;
+    z-index: 10;
+    background-position: center;
+}
+.single {
+    position: absolute;
+    z-index: 10;
 }
 #map {
     position: absolute;
@@ -8,21 +17,33 @@
     overflow: scroll;
     width: 100%;
     height: 100%;
+    float: right;
 }
 #floor {
     background-image: url(https://drive.google.com/uc?export=download&id=0BxGRqMtndc1CSWNzRTBka3J0RWc);
     position: absolute;
     left: 0px;
     top: 0px;
+    z-index: 0;
 }
 #objects {
     position: absolute;
-    left: 0px;
+    right: 0px;
     top: 0px;
     width: 300px;
     overflow-y: scroll;
     overflow-x: hidden;
-    background-color: teal;
+    background-color: rgba(7,127,140,0.8);
     height: 100%;
     z-index: 1;
+    color: white;
+    font-size: 18pt
+}
+#player {
+    position: absolute;
+    top: 0px;
+    left: 600px;
+}
+.selected {
+    border: 5px dashed #9BDE43;
 }

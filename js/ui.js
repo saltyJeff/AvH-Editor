@@ -34,6 +34,8 @@ function tab(obj) {
         case "Defines":
             define();
             break;
+        case "Waves":
+            wave();
         case "Level":
             xml2map();
             break;
@@ -105,13 +107,42 @@ var waitTemp;
 
 var waveParent;
 
-function addWave() {
-    if(waveParent === undefined) {
-        waveParent = document.getElementById("waves");
-        waveTemp = document.getElementById("wave");
-        stageTemp = document.getElementById("stage");
-        waitTemp = document.getElementById("wait");
+function wave () {
+    waveParent = document.getElementById("waves");
+    waveTemp = document.getElementById("wave");
+    stageTemp = waveTemp.content.getElementById("stage");
+    waitTemp = waveTemp.content.getElementById("wait");
+    
+    for(var i = 0; i < waveParent.children.length; i++) {
+        if(waveParent.children[i].tagName.toLowerCase() == "li") {
+            waveParent.removeChild(waveParent.children[i]);
+        }
     }
+    var waveObj = data.getElementsByTagName("waves")[0];
+    for(var i = 0; i < waveObj.childNodes.length; i++) {
+        var thisWave = waveObj.childNodes[i];
+        var thisWaveObj = waveTemp.content.cloneNode(true);
+        thisWaveObj.children[0].getElementsByClassName("reward")[0].value = thisWave.getAttribute("cash");
+        var stageList = thisWaveObj.children[0].getElementsByClassName("stages")[0];
+        for(var j = 0; j < thisWave.childNodes.length; j++) {
+            var thisStage = thisWave.childNodes[j];
+            if(thisStage.tagName == "wait") {
+                var thisWaitObj = waitTemp.content.cloneNode(true);
+                thisWaitObj.children[0].getElementsByClassName("waitTime")[0].value = parseFloat(thisStage.getAttribute("time"));
+            }
+            else {
+                var thisStageObj = stageTemp.content.cloneNode(true);
+                thisStageObj.children[0].getElementsByClassName("type")[0].value = thisStage.tagName;
+                thisStageObj.children[0].getElementsByClassName("amt")[0].value = parseInt(thisStage.getAttribute("amount"));
+                thisStageObj.children[0].getElementsByClassName("speed")[0].value = parseFloat(thisStage.getAttribute("speed"));
+            }
+            stageList.appendChild(thisStageObj);
+        }
+        waveParent.appendChild(thisWaveObj);
+    }
+}
+
+function addWave() {
     waveParent.appendChild(waveTemp.content.cloneNode(true));
 }
 
@@ -135,17 +166,11 @@ function toggleWave(obj) {
 }
 
 function addStage (obj) {
-    if(stageTemp === null) {
-        stageTemp = document.getElementById("stage");
-    }
     var list = obj.parentElement.parentElement.getElementsByTagName("ol")[0];
     list.appendChild(stageTemp.content.cloneNode(true));
 }
 
 function addWait (obj) {
-    if(waitTemp === null) {
-        waitTemp = document.getElementById("wait");
-    }
     var list = obj.parentElement.parentElement.getElementsByTagName("ol")[0];
     list.appendChild(waitTemp.content.cloneNode(true));
 }

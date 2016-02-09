@@ -2,6 +2,9 @@
 <html>
     <head>
         <title>AvH Level Editor</title>
+        <title>AvH Editor</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/interact.js/1.2.6/interact.min.js"></script>
+        <script src="js/transmute.js"></script>
         <script src="js/start.js"></script>
         <script src="js/data.js"></script>
         <script src="js/ui.js"></script>
@@ -11,9 +14,10 @@
         <link rel="stylesheet" href="css/level.css">
         <link href='https://fonts.googleapis.com/css?family=Orbitron:400,900' rel='stylesheet' type='text/css'>
     </head>
-    <body>
+    <body onload="document.getElementById('overlay').hidden = false; document.getElementById('load').hidden = true;">
         <div id="invisOverlay">
-            <div id="overlay">
+            <span id="load">LOADING ASSETS/IMAGES/EVERYTHING</span>
+            <div id="overlay" hidden>
                 <div>
                     <h2>Please load a file...</h2>
                     <input type="file" class="startInput" id="startFile" onchange="setColor(this)" onclick="this.value = null;"/>
@@ -42,13 +46,36 @@
         <div id="main">
             <div class="subpage" id="Level">
                 <div id="objects">
-                    <h3>Toolbox</h3>
+                    <h3>Toolbox <input type="button" value="Switch Side" onclick="switchSide(this)" /></h3>
+                    <input type="button" value="Save Changes" onclick="map2xml()" style="width: 100%; font-size: 14pt; color: red;"/>
+                    <h4>Zoom <input type="number" min="10" max="120" onchange="rescale(this.value)" value="100" id="resizer" step="10"/></h4>
+                    <div id="transforms" hidden>
+                        <h4>Width<input type="number" id="width" value="1" onchange="reTransform()"/></h4>
+                        <h4>Height<input type="number" id="height" value="1"  onchange="reTransform()" /></h4>
+                        <h4>Rotation<input type="number" id="rotation" defaultValue="0" onchange="reTransform()" min="0" max="360" step="15"/></h4>
+                    </div>
                     <ul id="tools">
+                        <img src="img/castle_wall.png" draggable="true" ondragstart="dragStart(event)" data-tool="tool-wall"/>
+                        <img src="img/wall.png" draggable="true" ondragstart="dragStart(event)" data-tool="tool-enemypass" style="width: 64px; height: 64px;"/>
+                        <img src="img/spawnpt.png" draggable="true" ondragstart="dragStart(event)" data-tool="tool-spawn" style="width: 64px; height: 64px;" />
+                        <img src="img/player.png" draggable="true" ondragstart="dragStart(event)" data-tool="tool-player" />
+                        <img src="img/NewstoreActive.png" draggable="true" ondragstart="dragStart(event)" data-tool="tool-store" />
+                    </ul>
+                    <ul id="customTools">
                         
                     </ul>
+                    <div id="toolList">
+                        <div class="tiling resizable tool-wall" style="background-image: url('img/castle_wall.png');" hidden data-obj="wall" onclick="mouse(event, this)" oncontextmenu="setSelected(event, this)"></div>
+                        <div class="tiling resizable tool-enemypass" style="background-image: url('img/wall.png');" hidden data-obj="enemypass" onclick="mouse(event, this)" oncontextmenu="setSelected(event, this)"></div>
+                        <img class="draggable single tool-spawn" src="img/spawnpt.png" hidden data-obj="spawn" style="width: 64px; height: 64px;" onclick="mouse(event, this)" oncontextmenu="setSelected(event, this)"/>
+                        <img src="img/player.png" id="player" class="draggable single tool-player" data-obj="player" hidden onclick="mouse(event, this)" oncontextmenu="setSelected(event, this)"/>
+                        <img class="draggable single tool-store" src="img/NewstoreActive.png" hidden data-obj="store" onclick="mouse(event, this)" oncontextmenu="setSelected(event, this)"/>
+                    </div>
                 </div>
-                <div id="map">
-                    <div id="floor" class="tiling"></div>
+                <div id="map" ondragover="drag(event)" ondrop="drop(event)">
+                    <div id="floor" class="tiling"  oncontextmenu="hideTransforms(event);">
+                        
+                    </div>
                 </div>
             </div>
             <div class="subpage" id="Defines" hidden>
@@ -73,6 +100,7 @@
                 </ul>
                 <input type="button" value="Save Changes" onclick="saveDefines()"/>
             </div>
+            <!--Wave Page -->
             <div class="subpage" id="Waves" hidden>
                 <h2>Waves: <input type="button" value="Add Wave" onclick="addWave()" /></h2>
                 <ol id="waves">
@@ -98,7 +126,7 @@
                                             </select>
                                         </h4>
                                         <h4>Amount: 
-                                            <input type="number" step="0.1" min="1" class="amt" />
+                                            <input type="number" step="1" min="1" class="amt" />
                                         </h4>
                                         <h4>Spawn Speed: 
                                             <input type="number" step="0.1" min="1" class="speed" />
@@ -111,7 +139,7 @@
                                         <h3>Wait Time: 
                                             <input type="number" step="0.1" min="1" class="waitTime"/>
                                         </h3>
-                                        <input type="button" value="Remove Stage" onclick="removeStage(this)" />
+                                        <input type="button" value="Remove Wait" onclick="removeWave(this)" />
                                     </li>
                                 </template>
                             </ol>

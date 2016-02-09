@@ -3,16 +3,23 @@ html, body {
     height: 100%;
     margin: 0px;
     overflow: hidden;
-    font-family: "Orbitron", serif;
+    font-family: "Orbitron", sans-serif;
     min-width: 1024px;
     min-height: 768px;
 }
 #overlay {
     width: 600px;
-    background-color: lightgrey;
+    background-color: #48BED9;;
     margin-left: auto;
     margin-right: auto;
     text-align: center;
+    color: white;
+    border-radius: 25px;
+}
+#load {
+    color: white;
+    font-size: 40pt;
+    font-family: sans-serif;
 }
 #invisOverlay {
     position: fixed;
@@ -21,7 +28,7 @@ html, body {
     z-index: 100;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 255, 0.2);
+    background-color: rgba(115,57,7,0.9);
 }
 .classInput {
     width: 200px;
@@ -30,54 +37,53 @@ html, body {
 #header {
     width: 100%;
     height: 5%;
-    background-color: wheat;
+    background-color: #48BED9;
     z-index: 0;
 }
 #header > h1 {
     margin: 0px;
     font-size: 4vh;
     text-align: center;
+    color: white;
 }
 
 #tabs {
     width: 100%;
-    height: 4%;
-    background-color: lightseagreen;
-    user-select: none;
+    background-color: #99D8D9;
 }
 #tabs > input {
     display: inline-block;
-    width: 12%;
-    margin-left: 0.5%;
+    width: 14%;
     text-align: center;
-    font-size: 3vh;
-    height: 100%;
+    font-size: 2vw;
     cursor: pointer;
+    height: 60%;
 }
 div.tab {
     display: inline-block;
-    width: 20%;
-    margin-left: 0.5%;
+    width: 19%;
     text-align: center;
-    font-size: 3.5vh;
-    height: 100%;
+    font-size: 3vh;
     cursor: pointer;
+    line-height: 100%;
+    margin-top: 0px;
+    color: white;
 }
 div.openTab {
-    background-color: lightseagreen;
+    background-color: #077F8C;
 }
 div.openTab:hover {
-    background-color: mediumpurple;
+    background-color: #08298C;
 }
 div.selectTab {
-    background-color: mediumvioletred;
+    background-color: #BFB195;
 }
 
 #main {
-    height: 91%;
+    height: 90%;
     width: 100%;
     overflow: hidden;
-    background-color: ghostwhite;
+    background-color: #BFB195;
     position: relative;
 }
 .subpage {
@@ -87,6 +93,7 @@ div.selectTab {
 }
 .subpage > h2 {
     font-size: 6vh;
+    color: #08298C;
 }
 #Waves, #Defines {
     overflow-y: scroll;
@@ -102,6 +109,10 @@ div.selectTab {
 #xmlTxt {
     width: 95%;
     height: 95%;
+    color: #82BF3B;
+    background-color: black;
+    font-size: 14pt;
+    font-family: monospace, sans-serif;
 }
 #saveXml {
    height: 2.5%;
@@ -109,7 +120,9 @@ div.selectTab {
 li > span {
     font-size: 4vh;
 }
-
+li > input {
+    height: 4vh;
+}
 ol {
     margin-left: auto;
     margin-right: auto;
