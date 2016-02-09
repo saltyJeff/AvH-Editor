@@ -16,6 +16,8 @@ function switchSide(obj) {
 }
 function xml2map () {
     document.getElementById("transforms").hidden = true;
+    document.getElementById("resizer").value = 100;
+    rescale(100);
     //the meta data
     var metas = data.getElementsByTagName("meta")[0].children;
     var floor;
@@ -24,6 +26,7 @@ function xml2map () {
             case "size":
                 var dimensions = metas[i].textContent.split("x");
                 floor = document.getElementById("floor");
+                $Transmute(floor);
                 floor.style.width = parseInt(dimensions[0])*imgSizes.floor+"px";
                 floor.style.height = parseInt(dimensions[1])*imgSizes.floor+"px";
                 
@@ -43,16 +46,16 @@ function xml2map () {
             continue;
         }
         var element = toolList.getElementsByClassName("tool-"+obj.tagName)[0].cloneNode(false);
-        element.style.left = parseFloat(obj.getAttribute("x"))*100+"px";
-        element.style.top = parseFloat(obj.getAttribute("y"))*100+"px";
+        element.style.left = parseFloat(obj.getAttribute("x"))*64+"px";
+        element.style.top = parseFloat(obj.getAttribute("y"))*64+"px";
         var xscale = parseInt(obj.getAttribute("xscale"));
         var yscale = parseInt(obj.getAttribute("yscale"));
         if(!Number.isNaN(xscale)) {
             var size = imgSizes[obj.tagName];
             element.style.width = xscale*size+"px";
             element.style.height = yscale*size+"px";
-            element.style.left = (parseFloat(obj.getAttribute("x"))*100-(xscale*size)/2)+"px";
-            element.style.top = (parseFloat(obj.getAttribute("y"))*100-(yscale*size)/2)+"px";
+            element.style.left = (parseFloat(obj.getAttribute("x"))*64-(xscale*size)/2)+"px";
+            element.style.top = (parseFloat(obj.getAttribute("y"))*64-(yscale*size)/2)+"px";
         }
         element.hidden = false;
         floor.appendChild(element);
@@ -62,6 +65,8 @@ function xml2map () {
     }
 }
 function map2xml () {
+    var oldScale = scale;
+    rescale(100)
     var mapObj = data.getElementsByTagName("map")[0];
     deleteChildren(mapObj);
     var floor = document.getElementById("floor");
@@ -76,8 +81,8 @@ function map2xml () {
                         
             var finalX = Math.round((parseInt(obj.style.left)+leftSet)+(parseInt(obj.style.width)/2 || 0));
             var finalY = Math.round((parseInt(obj.style.top)+topSet)+(parseInt(obj.style.height)/2 || 0));
-            node.setAttribute("x", finalX/100);
-            node.setAttribute("y", finalY/100);
+            node.setAttribute("x", finalX/64);
+            node.setAttribute("y", finalY/64);
             node.setAttribute("xscale", Math.round((parseFloat(obj.style.width) || size)/size));
             node.setAttribute("yscale", Math.round((parseFloat(obj.style.height) || size)/size));
             node.setAttribute("rotation", obj.transmute.getRotation());
@@ -92,21 +97,37 @@ function map2xml () {
             }
             var finalX = Math.round(parseInt(obj.style.left)+leftSet);
             var finalY = Math.round(parseInt(obj.style.top)+topSet);
-            node.setAttribute("x", finalX/100);
-            node.setAttribute("y", finalY/100);
+            node.setAttribute("x", finalX/64);
+            node.setAttribute("y", finalY/64);
             node.setAttribute("rotation", obj.transmute.getRotation());
         }
         
         mapObj.appendChild(node);
     }
+    rescale(oldScale*100);
     console.log("Map Saved");
 }
 //CRAZY BUGGY
-function rescale (obj) {
-    var scale = obj.value+"%";
+var scale = 1;
+function rescale (s) {
+    var newScale = parseInt(s)/100;
     var floor = document.getElementById("floor");
+    floor.style.width = reSize(floor.style.width, newScale);
+    floor.style.height = reSize(floor.style.height, newScale);
+    for(var i = 0; i < floor.children.length; i++) {
+        var element = floor.children[i];
+        element.style.width = reSize(element.style.width, newScale, element.naturalWidth);
+        element.style.height = reSize(element.style.height, newScale, element.naturalHeight);
+        element.style.left = reSize(element.style.left, newScale);
+        element.style.top = reSize(element.style.top, newScale);
+    }
+    
+    scale = newScale;
 }
-
+function reSize (n, k, o) {
+    var v = parseFloat(n) || parseFloat(o) || 64;
+    return (v/scale)*k +"px";
+}
 // target elements with the "draggable" class
 interact('.draggable')
   .draggable({
@@ -169,13 +190,14 @@ function drag(e) {
 function drop(e) {
     e.preventDefault();
     e.stopPropagation();
-    
     var element = document.getElementById("toolList").getElementsByClassName(e.dataTransfer.getData("text"))[0].cloneNode(false);
     element.hidden = false;
    
     element.style.left = getXY(e)[0]+"px";
     element.style.top = getXY(e)[1]+"px";
     $Transmute(element);
+    element.style.height = ((parseFloat(element.style.height) || element.naturalHeight)*scale)+"px";
+    element.style.width = ((parseFloat(element.style.width) || element.naturalWidth)*scale)+"px";
     document.getElementById("floor").appendChild(element);
 }
 function getXY(evt) {

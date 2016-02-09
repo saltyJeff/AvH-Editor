@@ -46,9 +46,7 @@
                 <div id="objects">
                     <h3>Toolbox <input type="button" value="Switch Side" onclick="switchSide(this)" /></h3>
                     <input type="button" value="Save Changes" onclick="map2xml()" style="width: 100%; height: 40px; font-size: 30px; color: red;"/>
-                    <!--Buggy
-                    <h4>Scale 25%<input type="range" min="25" max="100" onchange="rescale(this)" value="100"/>100%</h4>
-                    -->
+                    <h4>Scale 25%<input type="range" min="25" max="100" onchange="rescale(this.value)" value="100" id="resizer"/>100%</h4>
                     <div id="transforms" hidden>
                         <h4>Width<input type="number" id="width" value="1" onchange="reTransform()"/></h4>
                         <h4>Height<input type="number" id="height" value="1"  onchange="reTransform()" /></h4>
